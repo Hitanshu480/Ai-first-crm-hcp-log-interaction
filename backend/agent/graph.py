@@ -21,13 +21,13 @@ def build_graph():
     # Entry point
     graph.set_entry_point("log")
 
-    # Flow
+    # Edges
     graph.add_edge("log", "validate")
     graph.add_edge("edit", "validate")
     graph.add_edge("validate", "compliance")
     graph.add_edge("compliance", "followup")
 
-    # IMPORTANT: Explicit END
+    # IMPORTANT: terminate graph
     graph.add_edge("followup", END)
 
     return graph.compile()
