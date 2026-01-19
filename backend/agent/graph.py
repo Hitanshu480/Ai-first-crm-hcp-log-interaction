@@ -4,7 +4,7 @@ from .tools import (
     log_interaction_tool,
     edit_interaction_tool,
     validate_interaction_tool,
-    compliance_tool,
+    compliance_tool
 )
 
 def build_graph():
