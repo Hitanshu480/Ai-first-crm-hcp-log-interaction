@@ -1,4 +1,4 @@
-from langgraph.graph import StateGraph
+from langgraph.graph import StateGraph, END
 from .state import InteractionState
 from .tools import (
     log_interaction_tool,
@@ -11,17 +11,23 @@ from .tools import (
 def build_graph():
     graph = StateGraph(InteractionState)
 
+    # Nodes
     graph.add_node("log", log_interaction_tool)
     graph.add_node("edit", edit_interaction_tool)
     graph.add_node("validate", validate_interaction_tool)
     graph.add_node("compliance", compliance_tool)
     graph.add_node("followup", followup_tool)
 
+    # Entry point
     graph.set_entry_point("log")
 
+    # Flow
     graph.add_edge("log", "validate")
     graph.add_edge("edit", "validate")
     graph.add_edge("validate", "compliance")
     graph.add_edge("compliance", "followup")
+
+    # IMPORTANT: Explicit END
+    graph.add_edge("followup", END)
 
     return graph.compile()
