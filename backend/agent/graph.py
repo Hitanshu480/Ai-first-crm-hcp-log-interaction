@@ -4,8 +4,8 @@ from .tools import (
     log_interaction_tool,
     edit_interaction_tool,
     validate_interaction_tool,
-    followup_tool,
-    compliance_tool
+    compliance_tool,
+    followup_tool
 )
 
 def build_graph():
@@ -16,18 +16,20 @@ def build_graph():
     graph.add_node("edit", edit_interaction_tool)
     graph.add_node("validate", validate_interaction_tool)
     graph.add_node("compliance", compliance_tool)
-    graph.add_node("followup", followup_tool)
 
     # Entry point
     graph.set_entry_point("log")
 
-    # Edges
+    # Flow
     graph.add_edge("log", "validate")
     graph.add_edge("edit", "validate")
     graph.add_edge("validate", "compliance")
-    graph.add_edge("compliance", "followup")
 
-    # ✅ THIS IS THE KEY LINE (FIX)
-    graph.set_finish_point("followup")
+    # FINAL NODE (no dead-end)
+    graph.add_node("final", followup_tool)
+    graph.add_edge("compliance", "final")
+
+    # IMPORTANT: declare final node as output
+    graph.set_finish_point("final")
 
     return graph.compile()
