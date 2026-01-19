@@ -25,4 +25,3 @@ def build_graph():
     graph.add_edge("compliance", "followup")
 
     return graph.compile()
-
