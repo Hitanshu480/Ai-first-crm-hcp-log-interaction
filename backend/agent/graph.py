@@ -1,4 +1,4 @@
-from langgraph.graph import StateGraph, END
+from langgraph.graph import StateGraph
 from .state import InteractionState
 from .tools import (
     log_interaction_tool,
@@ -27,7 +27,7 @@ def build_graph():
     graph.add_edge("validate", "compliance")
     graph.add_edge("compliance", "followup")
 
-    # IMPORTANT: terminate graph
-    graph.add_edge("followup", END)
+    # ✅ THIS IS THE KEY LINE (FIX)
+    graph.set_finish_point("followup")
 
     return graph.compile()
