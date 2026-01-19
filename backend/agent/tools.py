@@ -3,7 +3,7 @@ from langchain_groq import ChatGroq
 
 llm = ChatGroq(
     model="gemma2-9b-it",
-    api_key="YOUR_GROQ_API_KEY"
+    api_key="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"
 )
 
 # TOOL 1: Log Interaction
