@@ -19,10 +19,8 @@ def build_graph():
         followup_tool,
     ]
 
-    tool_node = ToolNode(tools)
-
     graph = MessageGraph()
-    graph.add_node("tools", tool_node)
+    graph.add_node("tools", ToolNode(tools))
     graph.set_entry_point("tools")
 
     return graph.compile()
