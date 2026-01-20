@@ -1,113 +1,70 @@
-# Ai-first-crm-hcp-log-interaction
+# AI-First CRM – HCP Log Interaction Module
 
-AI-First CRM – HCP Log Interaction Module
- Overview
+## Overview
+This project demonstrates an AI-first Customer Relationship Management (CRM) module
+for Life Sciences, focused on logging Healthcare Professional (HCP) interactions.
 
-This project implements an AI-first CRM Log Interaction screen for Healthcare Professionals (HCPs).
-Unlike traditional CRMs, the form is never filled manually. All interaction data is captured, corrected, and managed only through an AI Assistant using LangGraph and LLMs.
+The system allows field representatives to log interactions using:
+1. A structured form
+2. A conversational AI chat interface
 
-The system is designed from a life sciences field representative perspective, focusing on accuracy, compliance, and usability.
+The AI agent is built using LangGraph and Groq LLM.
 
- Key Features
+---
 
-Log HCP interactions using natural language chat
+## Tech Stack
+- Frontend: React, Redux-style state handling
+- Backend: Python, FastAPI
+- AI Agent Framework: LangGraph
+- LLM: Groq (gemma2-9b-it)
+- Database: Conceptual (PostgreSQL/MySQL ready)
+- Font: Google Inter
 
-Automatically extract:
+---
 
-HCP Name
+## Key Features
+- Dual input: Form + Conversational Chat
+- AI-driven extraction of:
+  - Doctor name
+  - Sentiment
+  - Interaction summary
+- Automatic follow-up suggestions
+- Product feedback identification
 
-Topics discussed
+---
 
-Sentiment
+## LangGraph AI Agent Tools
 
-Materials shared
+1. **Log Interaction Tool**
+   - Extracts HCP name, sentiment, and summary using LLM
 
-Follow-up actions
+2. **Edit Interaction Tool**
+   - Modifies previously logged interactions based on user instruction
 
-Correct mistakes via chat (example: “Change Dr Smith to Dr John and sentiment to negative”)
+3. **Capture Product Feedback Tool**
+   - Detects issues like delivery delays or product complaints
 
-AI-controlled state management using LangGraph
+4. **Schedule Follow-up Tool**
+   - Automatically schedules follow-ups for negative interactions
 
-Read-only form auto-populated from AI state
+5. **Generate Final Summary Tool**
+   - Produces a structured final interaction summary
 
-🏗️ Architecture
-React UI (Read-only Form)
-   ↓
-AI Assistant Chat
-   ↓
-FastAPI Backend
-   ↓
-LangGraph Agent
-   ↓
-LLM (Groq – gemma2-9b-it)
-   ↓
-LangGraph Tools
-   ↓
-Central Interaction State
+---
 
-🧠 Why LangGraph?
+## Architecture Flow
+1. User enters interaction via chat or form
+2. Request sent to FastAPI backend
+3. LangGraph agent processes request using tools
+4. Structured interaction state is returned
+5. Frontend UI updates automatically
 
-LangGraph is used to:
+---
 
-Maintain persistent interaction state
+## How to Run
 
-Route user intent (log vs edit)
-
-Ensure structured, deterministic workflows
-
-Safely apply edits without overwriting existing data
-
-🛠️ LangGraph Tools Implemented (5 Total)
-1️⃣ Log Interaction Tool (Mandatory)
-
-Converts free-text chat into structured interaction data
-
-Uses LLM for summarization and entity extraction
-
-2️⃣ Edit Interaction Tool (Mandatory)
-
-Modifies only user-requested fields
-
-Preserves all other existing data
-
-3️⃣ Validate Interaction Tool
-
-Ensures mandatory fields exist
-
-Flags missing or inconsistent data
-
-4️⃣ Suggest Follow-up Tool
-
-Suggests next best actions based on sentiment and discussion
-
-5️⃣ Compliance Check Tool
-
-Flags potential promotional or non-compliant language
-
-🔄 Interaction Flow Example
-
-User Input (Chat):
-
-“Today I met Dr Smith and discussed product X efficiency. Sentiment was positive and I shared brochures.”
-
-➡️ AI extracts and populates form automatically.
-
-User Correction (Chat):
-
-“Change HCP name to Dr John and sentiment to negative. Keep everything else same.”
-
-➡️ Only specified fields are updated via Edit Interaction Tool.
-
-⚙️ Tech Stack
-
-Frontend: React, Redux, Google Inter font
-
-Backend: Python, FastAPI
-
-AI Agent Framework: LangGraph
-
-LLM: Groq – gemma2-9b-it
-
-Database: PostgreSQL / MySQL (logical schema)
-
-State Management: Redux + LangGraph
+### Backend
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
